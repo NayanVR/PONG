@@ -1,0 +1,5 @@
+.playful-heading {
+  font-family: "Luckiest guy";
+  color: var(--color-accent);
+  text-shadow: 0 10px 20px rgba(var(--color-accent-rgb), 0.4);
+}

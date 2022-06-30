@@ -1,0 +1,25 @@
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.welcome-title {
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  color: var(--color-primary);
+  text-shadow: 0 10px 15px rgba(var(--color-primary-rgb), 0.3);
+  line-height: 4rem;
+}
+
+.pong-title {
+  font-size: 7rem;
+}
+
+.cta-btn {
+  margin-top: 1rem;
+}

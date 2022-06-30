@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Archivo&display=swap");
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Archivo", sans-serif;
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+:root {
+  --color-primary: #1e96fc;
+  --color-primary-rgb: 30, 150, 252;
+  --color-primary-light: #a2d6f9;
+  --color-primary-dark: #072ac8;
+  --color-primary-dark-rgb: 7, 42, 200;
+  --color-accent: #ffc600;
+  --color-accent-rgb: 255, 198, 0;
+  --color-accent-light: #fcf300;
+}
