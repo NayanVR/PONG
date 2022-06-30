@@ -7,11 +7,34 @@
   font-family: inherit;
   cursor: pointer;
   border: none;
+  outline: none;
   box-shadow: 0 10px 15px rgba(var(--color-primary-dark-rgb), 0.4);
   transition: all 0.2s ease-in-out;
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus {
+  box-shadow: 0 10px 15px rgba(var(--color-primary-dark-rgb), 0.6);
+  transform: translateY(-3px);
+}
+
+.btn-secondary {
+  background-color: white;
+  padding: 1rem 2rem;
+  color: var(--color-primary-dark);
+  border-radius: 15px;
+  font-size: 1rem;
+  font-weight: 500;
+  font-family: inherit;
+  cursor: pointer;
+  outline: none;
+  border: 2px solid var(--color-primary-dark);
+  box-shadow: 0 10px 15px rgba(var(--color-primary-dark-rgb), 0.4);
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
   box-shadow: 0 10px 15px rgba(var(--color-primary-dark-rgb), 0.6);
   transform: translateY(-3px);
 }

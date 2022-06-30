@@ -9,13 +9,15 @@ function App() {
 
   const components = {
     welcome : <Welcome clickToContinue={clickToContinue}/>,
-    credentials: <Credentials />,
+    credentials: <Credentials joinRoom={joinRoom}/>,
     game: <Game />
   }
   
   const [renderComp, setRenderComp] = useState(components.welcome)
   
   function clickToContinue() { setRenderComp(components.credentials) }
+
+  function joinRoom() { setRenderComp(components.game) }
 
   return (
     <>
