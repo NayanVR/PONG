@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../styles/game.css'
 import PlayerInfo from './PlayerInfo'
+import { throttle } from './Util';
 
 export default function Game() {
 
@@ -10,10 +11,15 @@ export default function Game() {
     const [rightPlayerPos, setRightPlayerPos] = useState(50)
 
     const gameContainer = useRef(null)
+    const FPS = 10;
 
     function handleMouseMove(e) {
-        setLeftPlayerPos(((e.clientY - gameContainer.current.offsetTop) / gameContainer.current.clientHeight) * 100)
+        updatePostion(e.clientY);
     }
+
+    const updatePostion = throttle((clientY) => {
+        setLeftPlayerPos(((clientY - gameContainer.current.offsetTop) / gameContainer.current.clientHeight) * 100)
+    }, 1000 / FPS)
 
     return (
         <div className="main-game-container">
