@@ -23,7 +23,7 @@ export default function Credentials({ joinRoom }) {
       <input onChange={handleRoomCodeChange} value={roomCode} type="text" name="room code" placeholder="Room Code" />
       <div className="btns-container">
         <button onClick={joinRoom} className="btn-primary">Join Room</button>
-        <button button className="btn-secondary">Create Room</button>
+        <button className="btn-secondary">Create Room</button>
       </div>
     </div>
   )

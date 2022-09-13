@@ -1,0 +1,149 @@
+.main-game-container {
+  width: 65%;
+  height: 100%;
+  padding: 0 2rem;
+}
+
+/* DETAILS BAR CSS */
+
+.deatils-bar {
+  width: 100%;
+  height: 12%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* CHECKBOX */
+.custom-checkbox {
+  position: relative;
+  margin: 0 1rem;
+}
+
+.custom-checkbox label {
+  background-color: var(--color-red);
+  border-radius: 50%;
+  cursor: pointer;
+  height: var(--checkbox-size);
+  width: var(--checkbox-size);
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: all var(--checkbox-animation-time);
+}
+
+.custom-checkbox label:after {
+  border: 2px solid #fff;
+  border-top: none;
+  border-right: none;
+  content: "";
+  height: calc(var(--checkbox-tick-size) / 2);
+  width: var(--checkbox-tick-size);
+  left: 50%;
+  top: 45%;
+  opacity: 0;
+  position: absolute;
+  transform: translate(-50%, -50%) rotate(-45deg) scale(0);
+  transition: transform var(--checkbox-animation-time);
+}
+
+.custom-checkbox input[type="checkbox"] {
+  visibility: hidden;
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label {
+  background-color: var(--color-green);
+}
+
+.custom-checkbox input[type="checkbox"]:checked + label:after {
+  transform: translate(-50%, -50%) rotate(-45deg) scale(1);
+  opacity: 1;
+}
+
+.player-info-container {
+  width: max-content;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.p-info-left {
+  align-items: flex-start;
+}
+.p-info-right {
+  align-items: flex-end;
+}
+
+.player-info-container h3 {
+  font-family: inherit;
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+.player-name-container {
+  display: flex;
+  align-items: center;
+}
+
+.player-name-container h2 {
+  font-family: inherit;
+}
+
+/* GAME CSS */
+
+.game-container {
+  width: 100%;
+  height: 85%;
+  border-radius: 10px;
+  position: relative;
+  overflow: hidden;
+
+  background: -moz-radial-gradient(
+    circle,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
+  background: -webkit-radial-gradient(
+    circle,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
+  background: radial-gradient(
+    circle,
+    var(--color-primary) 0%,
+    var(--color-primary-dark) 100%
+  );
+}
+
+.score-container {
+  font-size: 2rem;
+  font-family: "Luckiest Guy", sans-serif;
+  color: var(--color-primary-dark);
+}
+
+.paddle {
+  position: absolute;
+  background-color: white;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2%;
+  height: 15%;
+}
+
+.paddle.left {
+  left: 1%;
+}
+
+.paddle.right {
+  right: 1%;
+}
+
+.ball {
+  position: absolute;
+  background-color: white;
+  left: 50%;
+  top: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5rem;
+  height: 1.5rem;
+}

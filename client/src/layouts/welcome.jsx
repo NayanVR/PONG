@@ -5,7 +5,7 @@ import '../styles/buttons.css'
 
 export default function Welcome( {clickToContinue} ) {
     return (
-        <main className="main-container">
+        <main className="welcome-main-container">
             <div className="welcome-title">
                 Welcome to    
             </div>

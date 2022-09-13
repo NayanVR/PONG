@@ -30,4 +30,9 @@ body {
   --color-accent: #ffc600;
   --color-accent-rgb: 255, 198, 0;
   --color-accent-light: #fcf300;
+  --color-red: #ff1640;
+  --color-green: #5fd800;
+  --checkbox-size: 20px;
+  --checkbox-tick-size: calc((var(--checkbox-size) / 2) - 1px);
+  --checkbox-animation-time: 500ms;
 }
