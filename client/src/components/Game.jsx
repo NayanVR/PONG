@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import '../styles/game.css'
 import PlayerInfo from './PlayerInfo'
-import { throttle } from './Util';
+import throttle from './Util';
 
 export default function Game() {
 

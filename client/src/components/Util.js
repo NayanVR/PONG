@@ -24,6 +24,4 @@ function throttle(cb, delay = 1000) {
     }
 }
 
-export default {
-    throttle
-}
+export default throttle
