@@ -5,7 +5,8 @@ import GameScreen from './layouts/gameScreen.jsx'
 import { io } from "socket.io-client"
 import { useEffect } from 'react'
 
-const socket = io("http://localhost:5000");
+// const socket = io("http://localhost:5000");
+const socket = io("https://pong-backend.onrender.com");
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
