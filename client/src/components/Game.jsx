@@ -20,7 +20,7 @@ export default function Game({ socket, roomCode, clientNumber }) {
     const [score, setScore] = useState([0, 0])
 
     const gameContainer = useRef(null)
-    const FPS = 40;
+    const FPS = 20;
 
     useEffect(() => {
         socket.on('gameState', updateGameState);

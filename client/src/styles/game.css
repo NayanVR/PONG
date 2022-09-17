@@ -127,7 +127,7 @@
   transform: translateY(-50%);
   width: 2%;
   height: 15%;
-  transition: top 25ms;
+  transition: top 50ms;
 }
 
 .paddle.left {
@@ -147,6 +147,6 @@
   transform: translate(-50%, -50%);
   width: 1.5rem;
   height: 1.5rem;
-  transition: all 25ms;
+  transition: all 50ms;
   transition-property: top, left;
 }
