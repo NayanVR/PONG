@@ -9,6 +9,15 @@ const socket = io("http://localhost:5000");
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
+  const [roomCode, setRoomCode] = useState("")
+  const [clientNumber, setClientNumber] = useState(0);
+  const components = {
+    welcome: <Welcome clickToContinue={clickToContinue} />,
+    credentials: <Credentials createRoom={createRoom} joinRoom={joinRoom} socket={socket} />,
+    game: <GameScreen socket={socket} roomCode={roomCode} clientNumber={clientNumber} />
+  }
+  const [renderComp, setRenderComp] = useState(components.welcome)
+
 
   useEffect(() => {
     socket.on('connect', () => {
@@ -21,17 +30,20 @@ function App() {
   }, [])
 
 
-  const components = {
-    welcome: <Welcome clickToContinue={clickToContinue} />,
-    credentials: <Credentials joinRoom={joinRoom} />,
-    game: <GameScreen />
-  }
 
-  const [renderComp, setRenderComp] = useState(components.welcome)
 
   function clickToContinue() { setRenderComp(components.credentials) }
 
-  function joinRoom() { setRenderComp(components.game) }
+  function joinRoom(clientNumber) {
+    setClientNumber(clientNumber);
+    setRenderComp(components.game)
+  }
+
+  function createRoom(roomName, clientNumber) {
+    setClientNumber(clientNumber);
+    setRoomCode(roomName);
+    setRenderComp(components.game)
+  }
 
   return (
     <>
