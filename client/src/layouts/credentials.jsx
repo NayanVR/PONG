@@ -3,6 +3,7 @@ import '../styles/typography.css'
 import '../styles/buttons.css'
 import '../styles/credentials.css'
 import { useEffect } from 'react'
+import toast, { Toaster } from 'react-hot-toast';
 
 export default function Credentials({ joinRoom, createRoom, socket }) {
 
@@ -16,34 +17,41 @@ export default function Credentials({ joinRoom, createRoom, socket }) {
     socket.on('roomJoined', (clientNumber) => {
       joinRoom(clientNumber);
     });
+    socket.on('roomNotFound', () => {
+      toast.error('Room not found');
+    });
+    socket.on('tooManyPlayers', () => {
+      toast.error('Room is Full');
+    });
   }, [])
 
 
   function handleCreateRoom() {
-    socket.emit('newGame');
+    if (username === "") {
+      toast.error("Please enter Username");
+      return;
+    }
+    socket.emit('newGame', username);
   }
 
   function handleJoinRoom() {
-    socket.emit('joinGame', roomCode);
-  }
-
-  function handleUsernameChange(e) {
-    setUsername(e.target.value)
-  }
-
-  function handleRoomCodeChange(e) {
-    setRoomCode(e.target.value)
+    if (username === "" || roomCode === "") {
+      toast.error("Please enter Username & Room Code");
+      return;
+    }
+    socket.emit('joinGame', username, roomCode);
   }
 
   return (
     <div className="credentials-container">
       <div className="playful-heading credentials-title">PLAY NOW</div>
-      <input onChange={handleUsernameChange} value={username} type="text" name="username" placeholder="Username" />
-      <input onChange={handleRoomCodeChange} value={roomCode} type="text" name="room code" placeholder="Room Code" />
+      <input onChange={e => setUsername(e.target.value)} value={username} type="text" placeholder="Username" />
+      <input onChange={e => setRoomCode(e.target.value)} value={roomCode} type="text" placeholder="Room Code" />
       <div className="btns-container">
         <button onClick={handleJoinRoom} className="btn-primary">Join Room</button>
         <button onClick={handleCreateRoom} className="btn-secondary">Create Room</button>
       </div>
+      <Toaster />
     </div>
   )
 }

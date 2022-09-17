@@ -1,18 +1,20 @@
+import { INITIAL_VELOCITY, INCREASE_VELOCITY, INITIAL_POSITION } from './constants.js';
+
 function createGameState() {
     return {
         players: [{
-            y: 50
+            y: INITIAL_POSITION
         }, {
-            y: 50
+            y: INITIAL_POSITION
         }],
         ball: {
-            x: 50,
-            y: 50,
+            x: INITIAL_POSITION,
+            y: INITIAL_POSITION,
             direction: {
                 x: 0,
                 y: 0
             },
-            velocity: 0.5
+            velocity: INITIAL_VELOCITY
         }
     };
 }
@@ -21,6 +23,13 @@ function initGame() {
     const state = createGameState();
     state.ball.direction = getBallDirection();
     return state;
+}
+
+function resetGame(state) {
+    state.ball.x = 50;
+    state.ball.y = 50;
+    state.ball.direction = getBallDirection();
+    state.ball.velocity = INITIAL_VELOCITY;
 }
 
 function gameLoop(state) {
@@ -32,6 +41,8 @@ function gameLoop(state) {
 
     ball.x += ball.direction.x * ball.velocity;
     ball.y += ball.direction.y * ball.velocity;
+
+    state.ball.velocity += INCREASE_VELOCITY;
 
     if (ball.y < 0 || ball.y > 100) {
         ball.direction.y *= -1;
@@ -79,5 +90,6 @@ function randomNumberBetween(min, max) { return Math.random() * (max - min) + mi
 
 export {
     initGame,
-    gameLoop
+    gameLoop,
+    resetGame
 }

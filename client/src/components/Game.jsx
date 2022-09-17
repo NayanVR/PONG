@@ -16,12 +16,16 @@ export default function Game({ socket, roomCode, clientNumber }) {
             y: 50
         }
     })
+    const [usernames, setUsernames] = useState(["", ""])
+    const [score, setScore] = useState([0, 0])
 
     const gameContainer = useRef(null)
-    const FPS = 60;
+    const FPS = 40;
 
     useEffect(() => {
         socket.on('gameState', updateGameState);
+        socket.on('gameInfo', updateGameInfo);
+        socket.emit('getGameInfo');
     }, [])
 
     function handleMouseMove(e) {
@@ -34,17 +38,23 @@ export default function Game({ socket, roomCode, clientNumber }) {
     }, 1000 / FPS)
 
     function updateGameState(state) {
-        // console.log(state);
         state = JSON.parse(state);
         setGameState(state);
+    }
+
+    function updateGameInfo(gameInfo) {
+        setUsernames(gameInfo.usernames);
+        setScore(gameInfo.score);
     }
 
     return (
         <div className="main-game-container">
             <div className="deatils-bar">
-                <PlayerInfo leftSide={true} playerName="Nayan" wins="Wins : 0" />
-                <div className="score-container">10 | 15</div>
-                <PlayerInfo leftSide={false} playerName="Nayan" wins="Wins : 0" />
+                <PlayerInfo leftSide={true} playerName={usernames[0]} wins="Wins : 0" />
+                <div className="score-container">
+                    {`${score[0]} | ${score[1]}`}
+                </div>
+                <PlayerInfo leftSide={false} playerName={usernames[1]} wins="Wins : 0" />
             </div>
 
             <div className="game-container" ref={gameContainer} onMouseMove={handleMouseMove}>
