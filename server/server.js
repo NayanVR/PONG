@@ -68,20 +68,6 @@ io.on("connection", client => {
 });
 
 
-// function startGameInterval() {
-//   const interval = setInterval(() => {
-
-//     const winner = gameLoop(state);
-//     // console.log(state[roomName]);
-
-//     if (!winner) {
-//       emitGameState(state);
-//     } else {
-//       // emitGameOver(roomName, winner);
-//       clearInterval(interval);
-//     }
-//   }, 1000 / FRAME_RATE);
-// }
 function startGameInterval(roomName) {
   const interval = setInterval(() => {
 
