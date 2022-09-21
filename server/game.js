@@ -26,8 +26,10 @@ function initGame() {
 }
 
 function resetGame(state) {
-    state.ball.x = 50;
-    state.ball.y = 50;
+    state.players[0].y = INITIAL_POSITION;
+    state.players[1].y = INITIAL_POSITION;
+    state.ball.x = INITIAL_POSITION;
+    state.ball.y = INITIAL_POSITION;
     state.ball.direction = getBallDirection();
     state.ball.velocity = INITIAL_VELOCITY;
 }

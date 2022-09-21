@@ -5,17 +5,17 @@ import GameScreen from './layouts/gameScreen.jsx'
 import { io } from "socket.io-client"
 import { useEffect } from 'react'
 
-// const socket = io("http://localhost:5000");
-const socket = io("https://pong-backend.onrender.com");
+const socket = io("http://localhost:5000");
+// const socket = io("https://pong-backend.onrender.com");
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
   const [roomCode, setRoomCode] = useState("")
   const [clientNumber, setClientNumber] = useState(0);
   const components = {
-    welcome: <Welcome clickToContinue={clickToContinue} />,
+    welcome: <Welcome clickToContinue={goToCredentials} />,
     credentials: <Credentials createRoom={createRoom} joinRoom={joinRoom} socket={socket} />,
-    game: <GameScreen socket={socket} roomCode={roomCode} clientNumber={clientNumber} />
+    game: <GameScreen socket={socket} goToCredentials={goToCredentials} />
   }
   const [renderComp, setRenderComp] = useState(components.welcome)
 
@@ -32,8 +32,7 @@ function App() {
 
 
 
-
-  function clickToContinue() { setRenderComp(components.credentials) }
+  function goToCredentials() { setRenderComp(components.credentials) }
 
   function joinRoom(clientNumber) {
     setClientNumber(clientNumber);
@@ -45,6 +44,7 @@ function App() {
     setRoomCode(roomName);
     setRenderComp(components.game)
   }
+
 
   return (
     <>

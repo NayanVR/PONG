@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from 'react'
 import '../styles/game.css'
 import PlayerInfo from './PlayerInfo'
 import throttle from './Util';
+import toast, { Toaster } from 'react-hot-toast';
 
-export default function Game({ socket, roomCode, clientNumber }) {
+export default function Game({ socket, goToCredentials }) {
 
     const [gameState, setGameState] = useState({
         players: [{
@@ -25,6 +26,8 @@ export default function Game({ socket, roomCode, clientNumber }) {
     useEffect(() => {
         socket.on('gameState', updateGameState);
         socket.on('gameInfo', updateGameInfo);
+        socket.on('playerLeft', handlePlayerLeft);
+        socket.on('hostLeft', handleHostLeft);
         socket.emit('getGameInfo');
     }, [])
 
@@ -45,6 +48,14 @@ export default function Game({ socket, roomCode, clientNumber }) {
     function updateGameInfo(gameInfo) {
         setUsernames(gameInfo.usernames);
         setScore(gameInfo.score);
+    }
+
+    function handlePlayerLeft(playerTwoName) {
+        toast.error(`${playerTwoName} left the game`);
+    }
+
+    function handleHostLeft() {
+        // goToCredentials();
     }
 
     return (
@@ -68,6 +79,7 @@ export default function Game({ socket, roomCode, clientNumber }) {
                     style={{ top: `${gameState.players[1].y}%` }}
                 ></div>
             </div>
+            <Toaster />
         </div>
     )
 }
