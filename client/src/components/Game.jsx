@@ -29,6 +29,13 @@ export default function Game({ socket, goToCredentials }) {
         socket.on('playerLeft', handlePlayerLeft);
         socket.on('hostLeft', handleHostLeft);
         socket.emit('getGameInfo');
+
+        return () => {
+            socket.off('gameState');
+            socket.off('gameInfo');
+            socket.off('playerLeft');
+            socket.off('hostLeft');
+        }
     }, [])
 
     function handleMouseMove(e) {
@@ -55,7 +62,7 @@ export default function Game({ socket, goToCredentials }) {
     }
 
     function handleHostLeft() {
-        // goToCredentials();
+        goToCredentials("Host left the game");
     }
 
     return (

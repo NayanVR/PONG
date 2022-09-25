@@ -79,9 +79,10 @@ io.on("connection", client => {
     if (clientNumber === 2) {
       const clientOneName = gameInfo[roomName].usernames[0];
       const clientTwoName = gameInfo[roomName].usernames[1];
-      io.sockets.in(roomName).emit('playerLeft', clientTwoName);
       clearInterval(gameIntervals[roomName]);
+      io.sockets.in(roomName).emit('playerLeft', clientTwoName);
       resetGame(state[roomName]);
+
       gameInfo[roomName] = {
         usernames: [clientOneName, `Room code : ${roomName}`],
         score: [0, 0]
@@ -90,13 +91,12 @@ io.on("connection", client => {
     }
 
     if (clientNumber === 1) {
+      clearInterval(gameIntervals[roomName]);
       io.sockets.in(roomName).emit('hostLeft');
       delete clientRooms[client.id];
       delete state[roomName];
       delete gameInfo[roomName];
     }
-
-    console.log(state);
   }
 
   function handleUpdatePaddle(yPos) {
@@ -125,7 +125,6 @@ function startGameInterval(roomName) {
       io.sockets.in(roomName).emit('gameInfo', gameInfo[roomName]);
       resetGame(state[roomName]);
       if (gameInfo[roomName].score[winner - 1] === 10) {
-        console.log("Winner : ", winner);
         clearInterval(gameIntervals[roomName]);
       }
     }

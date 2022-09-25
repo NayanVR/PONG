@@ -4,6 +4,7 @@ import Credentials from './layouts/credentials.jsx'
 import GameScreen from './layouts/gameScreen.jsx'
 import { io } from "socket.io-client"
 import { useEffect } from 'react'
+import toast, { Toaster } from 'react-hot-toast'
 
 const socket = io("http://localhost:5000");
 // const socket = io("https://pong-backend.onrender.com");
@@ -32,7 +33,10 @@ function App() {
 
 
 
-  function goToCredentials() { setRenderComp(components.credentials) }
+  function goToCredentials(message) {
+    if (message) toast.error(message);
+    setRenderComp(components.credentials)
+  }
 
   function joinRoom(clientNumber) {
     setClientNumber(clientNumber);
@@ -49,6 +53,7 @@ function App() {
   return (
     <>
       {renderComp}
+      <Toaster />
     </>
   )
 }

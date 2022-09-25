@@ -23,6 +23,13 @@ export default function Credentials({ joinRoom, createRoom, socket }) {
     socket.on('tooManyPlayers', () => {
       toast.error('Room is Full');
     });
+
+    return () => {
+      socket.off('roomCreated');
+      socket.off('roomJoined');
+      socket.off('roomNotFound');
+      socket.off('tooManyPlayers');
+    }
   }, [])
 
 
