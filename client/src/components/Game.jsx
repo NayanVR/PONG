@@ -4,7 +4,7 @@ import PlayerInfo from './PlayerInfo'
 import throttle from './Util';
 import toast, { Toaster } from 'react-hot-toast';
 
-export default function Game({ socket, goToCredentials }) {
+export default function Game({ socket, goToCredentials, clientNumber }) {
 
     const [gameState, setGameState] = useState({
         players: [{
@@ -17,8 +17,11 @@ export default function Game({ socket, goToCredentials }) {
             y: 50
         }
     })
-    const [usernames, setUsernames] = useState(["", ""])
-    const [score, setScore] = useState([0, 0])
+    const [gameInfo, setGameInfo] = useState({
+        usernames: ["", ""],
+        score: [0, 0]
+    })
+    const [ready, setReady] = useState([false, false])
 
     const gameContainer = useRef(null)
     const FPS = 20;
@@ -53,8 +56,7 @@ export default function Game({ socket, goToCredentials }) {
     }
 
     function updateGameInfo(gameInfo) {
-        setUsernames(gameInfo.usernames);
-        setScore(gameInfo.score);
+        setGameInfo(gameInfo);
     }
 
     function handlePlayerLeft(playerTwoName) {
@@ -68,11 +70,11 @@ export default function Game({ socket, goToCredentials }) {
     return (
         <div className="main-game-container">
             <div className="deatils-bar">
-                <PlayerInfo leftSide={true} playerName={usernames[0]} wins="Wins : 0" />
+                <PlayerInfo clientNumber={clientNumber} gameInfo={gameInfo} leftSide={true} ready={ready} setReady={setReady} />
                 <div className="score-container">
-                    {`${score[0]} | ${score[1]}`}
+                    {`${gameInfo.score[0]} | ${gameInfo.score[1]}`}
                 </div>
-                <PlayerInfo leftSide={false} playerName={usernames[1]} wins="Wins : 0" />
+                <PlayerInfo clientNumber={clientNumber} gameInfo={gameInfo} leftSide={false} ready={ready} setReady={setReady} />
             </div>
 
             <div className="game-container" ref={gameContainer} onMouseMove={handleMouseMove}>

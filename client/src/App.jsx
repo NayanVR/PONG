@@ -15,8 +15,7 @@ function App() {
   const [clientNumber, setClientNumber] = useState(0);
   const components = {
     welcome: <Welcome clickToContinue={goToCredentials} />,
-    credentials: <Credentials createRoom={createRoom} joinRoom={joinRoom} socket={socket} />,
-    game: <GameScreen socket={socket} goToCredentials={goToCredentials} />
+    credentials: <Credentials createRoom={createRoom} joinRoom={joinRoom} socket={socket} />
   }
   const [renderComp, setRenderComp] = useState(components.welcome)
 
@@ -38,15 +37,19 @@ function App() {
     setRenderComp(components.credentials)
   }
 
-  function joinRoom(clientNumber) {
-    setClientNumber(clientNumber);
-    setRenderComp(components.game)
+  function joinRoom(clientNum) {
+    setClientNumber(clientNum);
+    setRenderComp(
+      <GameScreen clientNumber={clientNum} socket={socket} goToCredentials={goToCredentials} />
+    )
   }
 
-  function createRoom(roomName, clientNumber) {
-    setClientNumber(clientNumber);
+  function createRoom(roomName, clientNum) {
+    setClientNumber(clientNum);
     setRoomCode(roomName);
-    setRenderComp(components.game)
+    setRenderComp(
+      <GameScreen clientNumber={clientNum} socket={socket} goToCredentials={goToCredentials} />
+    )
   }
 
 
