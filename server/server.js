@@ -27,6 +27,7 @@ io.on("connection", client => {
   client.on('newGame', handleNewGame);
   client.on('joinGame', handleJoinGame);
   client.on('getGameInfo', handleGetGameInfo);
+  client.on('setGameInfo', handleSetGameInfo);
   client.on('disconnect', handleDisconnect);
 
   function handleJoinGame(username, roomName) {
@@ -49,8 +50,6 @@ io.on("connection", client => {
     client.join(roomName);
     client.number = 2;
     client.emit('roomJoined', 2);
-
-    startGameInterval(roomName);
   }
 
   function handleNewGame(username) {
@@ -61,7 +60,9 @@ io.on("connection", client => {
     state[roomName] = initGame();
     gameInfo[roomName] = {
       usernames: [username, `Room code : ${roomName}`],
-      score: [0, 0]
+      score: [0, 0],
+      ready: [false, false],
+      wins: [0, 0]
     };
 
     client.join(roomName);
@@ -85,7 +86,9 @@ io.on("connection", client => {
 
       gameInfo[roomName] = {
         usernames: [clientOneName, `Room code : ${roomName}`],
-        score: [0, 0]
+        score: [0, 0],
+        ready: [false, false],
+        wins: [0, 0]
       };
       io.sockets.in(roomName).emit('gameInfo', gameInfo[roomName]);
     }
@@ -110,6 +113,15 @@ io.on("connection", client => {
     const roomName = clientRooms[client.id];
     io.sockets.in(roomName).emit('gameInfo', gameInfo[roomName]);
   }
+
+  function handleSetGameInfo(newGameInfo) {
+    const roomName = clientRooms[client.id];
+    gameInfo[roomName] = newGameInfo;
+    io.sockets.in(roomName).emit('gameInfo', gameInfo[roomName]);
+
+    if (gameInfo[roomName].ready[0] && gameInfo[roomName].ready[1] && !gameIntervals[roomName])
+      startGameInterval(roomName);
+  }
 });
 
 
@@ -121,11 +133,18 @@ function startGameInterval(roomName) {
     if (!winner) {
       emitGameState(roomName, state[roomName]);
     } else {
+
       gameInfo[roomName].score[winner - 1] += 1;
       io.sockets.in(roomName).emit('gameInfo', gameInfo[roomName]);
       resetGame(state[roomName]);
+
       if (gameInfo[roomName].score[winner - 1] === 10) {
         clearInterval(gameIntervals[roomName]);
+        gameInfo[roomName].wins[winner - 1] += 1;
+        gameInfo[roomName].ready = [false, false];
+        gameInfo[roomName].score = [0, 0];
+        io.sockets.in(roomName).emit('gameInfo', gameInfo[roomName]);
+        delete gameIntervals[roomName];
       }
     }
   }, 1000 / FRAME_RATE);

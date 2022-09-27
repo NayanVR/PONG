@@ -19,9 +19,11 @@ export default function Game({ socket, goToCredentials, clientNumber }) {
     })
     const [gameInfo, setGameInfo] = useState({
         usernames: ["", ""],
-        score: [0, 0]
+        score: [0, 0],
+        ready: [false, false],
+        wins: [0, 0]
     })
-    const [ready, setReady] = useState([false, false])
+    // const [ready, setReady] = useState([false, false])
 
     const gameContainer = useRef(null)
     const FPS = 20;
@@ -70,11 +72,11 @@ export default function Game({ socket, goToCredentials, clientNumber }) {
     return (
         <div className="main-game-container">
             <div className="deatils-bar">
-                <PlayerInfo clientNumber={clientNumber} gameInfo={gameInfo} leftSide={true} ready={ready} setReady={setReady} />
+                <PlayerInfo clientNumber={clientNumber} gameInfo={gameInfo} socket={socket} leftSide={true} />
                 <div className="score-container">
                     {`${gameInfo.score[0]} | ${gameInfo.score[1]}`}
                 </div>
-                <PlayerInfo clientNumber={clientNumber} gameInfo={gameInfo} leftSide={false} ready={ready} setReady={setReady} />
+                <PlayerInfo clientNumber={clientNumber} gameInfo={gameInfo} socket={socket} leftSide={false} />
             </div>
 
             <div className="game-container" ref={gameContainer} onMouseMove={handleMouseMove}>
