@@ -29,6 +29,7 @@ io.on("connection", client => {
   client.on('getGameInfo', handleGetGameInfo);
   client.on('setGameInfo', handleSetGameInfo);
   client.on('disconnect', handleDisconnect);
+  client.on('chatMessage', handleChatMessage);
 
   function handleJoinGame(username, roomName) {
     const room = io.sockets.adapter.rooms.get(roomName);
@@ -78,10 +79,16 @@ io.on("connection", client => {
     const clientNumber = client.number;
 
     if (clientNumber === 2) {
-      const clientOneName = gameInfo[roomName].usernames[0];
-      const clientTwoName = gameInfo[roomName].usernames[1];
+
+      let clientOneName;
+      let clientTwoName;
+
+      if (gameInfo[roomName] !== undefined) {
+        clientOneName = gameInfo[roomName].usernames[0];
+        clientTwoName = gameInfo[roomName].usernames[1];
+        io.sockets.in(roomName).emit('playerLeft', clientTwoName);
+      }
       clearInterval(gameIntervals[roomName]);
-      io.sockets.in(roomName).emit('playerLeft', clientTwoName);
       resetGame(state[roomName]);
 
       gameInfo[roomName] = {
@@ -100,6 +107,11 @@ io.on("connection", client => {
       delete state[roomName];
       delete gameInfo[roomName];
     }
+  }
+
+  function handleChatMessage(message, userLetter) {
+    const roomName = clientRooms[client.id];
+    client.broadcast.to(roomName).emit('chatMessage', message, userLetter);
   }
 
   function handleUpdatePaddle(yPos) {

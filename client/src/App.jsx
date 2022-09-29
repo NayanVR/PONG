@@ -37,18 +37,18 @@ function App() {
     setRenderComp(components.credentials)
   }
 
-  function joinRoom(clientNum) {
+  function joinRoom(clientNum, uName) {
     setClientNumber(clientNum);
     setRenderComp(
-      <GameScreen clientNumber={clientNum} socket={socket} goToCredentials={goToCredentials} />
+      <GameScreen clientNumber={clientNum} socket={socket} goToCredentials={goToCredentials} username={uName} />
     )
   }
 
-  function createRoom(roomName, clientNum) {
+  function createRoom(roomName, clientNum, uName) {
     setClientNumber(clientNum);
     setRoomCode(roomName);
     setRenderComp(
-      <GameScreen clientNumber={clientNum} socket={socket} goToCredentials={goToCredentials} />
+      <GameScreen clientNumber={clientNum} socket={socket} goToCredentials={goToCredentials} username={uName} />
     )
   }
 

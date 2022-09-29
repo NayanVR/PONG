@@ -12,10 +12,10 @@ export default function Credentials({ joinRoom, createRoom, socket }) {
 
   useEffect(() => {
     socket.on('roomCreated', (roomName, clientNumber) => {
-      createRoom(roomName, clientNumber);
+      createRoom(roomName, clientNumber, username);
     });
     socket.on('roomJoined', (clientNumber) => {
-      joinRoom(clientNumber);
+      joinRoom(clientNumber, username);
     });
     socket.on('roomNotFound', () => {
       toast.error('Room not found');
@@ -30,7 +30,7 @@ export default function Credentials({ joinRoom, createRoom, socket }) {
       socket.off('roomNotFound');
       socket.off('tooManyPlayers');
     }
-  }, [])
+  }, [username])
 
 
   function handleCreateRoom() {
