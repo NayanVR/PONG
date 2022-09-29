@@ -7,7 +7,7 @@ export default function GameScreen({ socket, goToCredentials, clientNumber }) {
   return (
     <div style={{ width: "100vw", height: "100vh", display: "flex" }}>
       <Game socket={socket} goToCredentials={goToCredentials} clientNumber={clientNumber} />
-      <ChatSection />
+      <ChatSection socket={socket} />
     </div>
   )
 }
