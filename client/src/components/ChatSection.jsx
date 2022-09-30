@@ -9,17 +9,17 @@ export default function ChatSection({ socket, username }) {
 
   useEffect(() => {
     socket.on("chatMessage", (_message, _userLetter) => {
-      let newMessages = messages
-      newMessages.push({ message: _message, userLetter: _userLetter, isUser: false })
-      setMessages(newMessages)
-      setTextInput("a")
-      setTextInput("")
+      handleRecieveMessage(_message, _userLetter);
     });
 
     return () => {
       socket.off("chatMessage")
     }
   }, [])
+
+  function handleRecieveMessage(_message, _userLetter) {
+    setMessages([...messages, { message: _message, userLetter: _userLetter, isUser: true }])
+  }
 
   function handleSend() {
 
@@ -28,10 +28,7 @@ export default function ChatSection({ socket, username }) {
     const _userLetter = username.toUpperCase()[0]
     const _message = textInput
 
-    let newMessages = messages
-    newMessages.push({ message: _message, userLetter: _userLetter, isUser: true })
-
-    setMessages(newMessages)
+    setMessages([...messages, { message: _message, userLetter: _userLetter, isUser: true }])
 
     socket.emit("chatMessage", _message, _userLetter)
 
@@ -45,9 +42,7 @@ export default function ChatSection({ socket, username }) {
       </div>
       <div className="chats-container">
         {messages.map((message, index) => {
-          return (
-            <ChatBubble key={index} userLetter={message.userLetter} message={message.message} isUser={message.isUser} />
-          )
+          return <ChatBubble key={index} userLetter={message.userLetter} message={message.message} isUser={message.isUser} />
         })}
       </div>
       <div className="input-container">

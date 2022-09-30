@@ -26,6 +26,8 @@ function initGame() {
 }
 
 function resetGame(state) {
+    if (!state) return;
+
     state.players[0].y = INITIAL_POSITION;
     state.players[1].y = INITIAL_POSITION;
     state.ball.x = INITIAL_POSITION;

@@ -6,8 +6,8 @@ import { io } from "socket.io-client"
 import { useEffect } from 'react'
 import toast, { Toaster } from 'react-hot-toast'
 
-// const socket = io("http://localhost:5000");
-const socket = io("https://pong-backend.onrender.com");
+const socket = io("http://localhost:5000");
+// const socket = io("https://pong-backend.onrender.com");
 
 function App() {
   const [isConnected, setIsConnected] = useState(socket.connected);
